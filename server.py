@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request
 import json, os, dotenv
 import bcrypt # type: ignore
 
