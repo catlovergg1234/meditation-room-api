@@ -49,6 +49,17 @@ def log_in():
         return jsonify({"status": "success"})
     else:
         return jsonify({"status": "error", "reason": "password incorrect"})
-    
+@app.route("/api/delete", methods=["DELETE"])
+def delete():
+    data = request.get_json()
+    deleted_user = data.get("username")
+    if deleted_user in passwords:
+        del passwords[deleted_user]
+        return jsonify({"status": "success"})
+    else:
+        return jsonify({"status": "error", "reason": "no such user"})
+@app.route("/api/list-users", methods=["POST"])
+def ls_all():
+    return jsonify(passwords)
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
