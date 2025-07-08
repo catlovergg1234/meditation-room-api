@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-import json, os, dotenv
+import json, os
 import bcrypt # type: ignore
 
 dotenv.load_dotenv()
