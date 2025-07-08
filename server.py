@@ -60,6 +60,6 @@ def delete():
         return jsonify({"status": "error", "reason": "no such user"})
 @app.route("/api/list-users", methods=["POST"])
 def ls_all():
-    return jsonify(passwords)
+    return jsonify({"contents": list(passwords.keys())})
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
