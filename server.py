@@ -2,7 +2,6 @@ from flask import Flask, jsonify, request
 import json, os
 import bcrypt # type: ignore
 
-dotenv.load_dotenv()
 app = Flask(__name__)
 
 API_KEY = os.getenv("API_KEY")
