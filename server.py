@@ -1,6 +1,9 @@
 from flask import Flask, jsonify, request
 import json, os
 import bcrypt # type: ignore
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 
@@ -18,7 +21,21 @@ def hash(p):
 
 def check(p, hash):
     return bcrypt.checkpw(p.encode(), hash.encode())
-
+def send_email(to, code):
+    msg = MIMEMultipart()
+    msg["From"] = "omertlabar@gmail.com"
+    msg["To"] = to
+    msg["Subject"] = "Meditasyon odası - Doğrulama"
+    msg.attach(MIMEText(f"Merhabalar.\nTek kullanımlık kodunuz: {code}.", "plain"))
+    try:
+        server = smtlib.SMTP("smtp.gmail.com", 587)
+        server.ehlo()
+        server.starttls()
+        server.login("omertlabar@gmail.com", "brhd nozj eycm wycf")
+        server.send_message(msg)
+        server.quit()
+    except Exception as e:
+        return {"status": "error"}
 @app.before_request
 def is_right_api_key():
     if not request.headers.get("X-API-KEY") == API_KEY:
@@ -29,6 +46,7 @@ def sign_up():
     data = request.get_json()
     username = data.get("username")
     password = data.get("password")
+    email = data.get("email")
     if (not isinstance(username, str)) or (not isinstance(password, str)):
         return jsonify({"status": "error", "reason": "input is not string"})
     if username in passwords:
