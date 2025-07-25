@@ -28,10 +28,10 @@ def send_email(to, code):
     msg["Subject"] = "Meditasyon odası - Doğrulama"
     msg.attach(MIMEText(f"Merhabalar.\nTek kullanımlık kodunuz: {code}.", "plain"))
     try:
-        server = smtlib.SMTP("smtp.gmail.com", 587)
+        server = smtplib.SMTP("smtp.gmail.com", 587)
         server.ehlo()
         server.starttls()
-        server.login("omertlabar@gmail.com", "brhd nozj eycm wycf")
+        server.login("omertlabar@gmail.com", "ctgm okje ofpd xlig")
         server.send_message(msg)
         server.quit()
     except Exception as e:
