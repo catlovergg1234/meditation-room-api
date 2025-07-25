@@ -8,6 +8,7 @@ from email.mime.multipart import MIMEMultipart
 app = Flask(__name__)
 
 API_KEY = os.getenv("API_KEY")
+SENDER_PASSWORD = os.getenv("MAIL_PASSWORD")
 
 if os.path.exists("users.json"):
     with open("users.json") as f:
@@ -31,7 +32,7 @@ def send_email(to, code):
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.ehlo()
         server.starttls()
-        server.login("omertlabar@gmail.com", "ctgm okje ofpd xlig")
+        server.login("omertlabar@gmail.com", SENDER_PASSWORD)
         server.send_message(msg)
         server.quit()
     except Exception as e:
